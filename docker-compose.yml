@@ -9,13 +9,14 @@ services:
     - DB_NAME=redmine_production
     volumes:
     - /srv/docker/redmine/postgresql:/var/lib/postgresql
+    restart: unless-stopped
 
   redmine:
     image: sameersbn/redmine:3.4.2
     depends_on:
     - postgresql
     environment:
-    - TZ=Asia/Kolkata
+    - TZ=Europe/London
 
     - DB_ADAPTER=postgresql
     - DB_HOST=postgresql
@@ -25,8 +26,8 @@ services:
     - DB_NAME=redmine_production
 
     - REDMINE_PORT=10083
-    - REDMINE_HTTPS=false
-    - REDMINE_RELATIVE_URL_ROOT=
+    - REDMINE_HTTPS=true
+    - REDMINE_RELATIVE_URL_ROOT=/redmine
     - REDMINE_SECRET_TOKEN=
 
     - REDMINE_SUDO_MODE_ENABLED=false
@@ -38,15 +39,15 @@ services:
     - REDMINE_BACKUP_EXPIRY=
     - REDMINE_BACKUP_TIME=
 
-    - SMTP_ENABLED=false
+    - SMTP_ENABLED=true
     - SMTP_METHOD=smtp
-    - SMTP_DOMAIN=www.example.com
-    - SMTP_HOST=smtp.gmail.com
-    - SMTP_PORT=587
-    - SMTP_USER=mailer@example.com
-    - SMTP_PASS=password
-    - SMTP_STARTTLS=true
-    - SMTP_AUTHENTICATION=:login
+    - SMTP_DOMAIN=lincoln.ac.uk
+    - SMTP_HOST=mailslot.lincoln.ac.uk
+    - SMTP_PORT=25
+    - SMTP_USER=
+    - SMTP_PASS=
+    - SMTP_STARTTLS=false
+    - SMTP_AUTHENTICATION=
 
     - IMAP_ENABLED=false
     - IMAP_HOST=imap.gmail.com
@@ -60,3 +61,4 @@ services:
     - "10083:80"
     volumes:
     - /srv/docker/redmine/redmine:/home/redmine/data
+    restart: unless-stopped
