@@ -12,7 +12,10 @@ services:
     restart: unless-stopped
 
   redmine:
-    image: sameersbn/redmine:3.4.4
+    image: sameersbn/redmine:3.4.4-2
+    dns:
+    - 10.210.23.198
+    - 10.210.23.213
     depends_on:
     - postgresql
     environment:
